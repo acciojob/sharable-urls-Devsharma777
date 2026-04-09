@@ -1,8 +1,55 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <script type="text/javascript" src="./script.js">
-</script>
-  </body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>URL Builder</title>
+</head>
+<body>
 
+    <!-- Form -->
+    <form onsubmit="return false;">
+        <!-- Name Input -->
+        <input type="text" id="name" name="name" placeholder="Enter name">
+
+        <!-- Year Input -->
+        <input type="number" id="year" name="year" placeholder="Enter year">
+
+        <!-- Submit Button -->
+        <button id="button" type="submit">Submit</button>
+    </form>
+
+    <!-- URL Display -->
+    <h3 id="url" th:text="'https://localhost:8080/'">
+        https://localhost:8080/
+    </h3>
+
+    <script>
+        document.getElementById("button").addEventListener("click", function () {
+
+            let name = document.getElementById("name").value.trim();
+            let year = document.getElementById("year").value.trim();
+
+            let baseUrl = "https://localhost:8080/";
+            let params = [];
+
+            // Add parameters if present
+            if (name !== "") {
+                params.push("name=" + encodeURIComponent(name));
+            }
+            if (year !== "") {
+                params.push("year=" + encodeURIComponent(year));
+            }
+
+            let finalUrl = baseUrl;
+
+            if (params.length > 0) {
+                finalUrl += "?" + params.join("&");
+            }
+
+            // Update h3
+            document.getElementById("url").innerText = finalUrl;
+        });
+    </script>
+
+</body>
 </html>
